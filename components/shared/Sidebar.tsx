@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import React from "react";
 import { IoNewspaperOutline } from "react-icons/io5";
@@ -5,7 +6,9 @@ import { RiQuestionAnswerLine } from "react-icons/ri";
 import { BsFileEarmarkBarGraph } from "react-icons/bs";
 import { FaDatabase } from "react-icons/fa6";
 import { TbCoin } from "react-icons/tb";
+import { useDisclosure } from "@nextui-org/react";
 const Sidebar = () => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   return (
     <div className="h-full w-full flex flex-col flex-auto flex-shrink-0 antialiased bg-teal-500 text-white">
       <div className="fixed flex flex-col top-0 left-0 w-64 bg-teal-500 h-full border-r">
@@ -23,7 +26,7 @@ const Sidebar = () => {
             </li>
             <li>
               <Link
-                href="/myExams"
+                href="/app/myExams"
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-teal-50 text-white hover:text-gray-800 border-l-4 border-transparent hover:border-teal-900 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
@@ -36,7 +39,7 @@ const Sidebar = () => {
             </li>
             <li>
               <Link
-                href="/myAnswers"
+                href="/app/myAnswers"
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-teal-50 text-white hover:text-gray-800 border-l-4 border-transparent hover:border-teal-900 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
@@ -173,7 +176,7 @@ const Sidebar = () => {
             </li>
             <li>
               <Link
-                href="#"
+                href="/signout"
                 className="relative flex flex-row items-center h-11 focus:outline-none hover:bg-white text-white hover:text-gray-800 border-l-4 border-transparent hover:border-teal-900 pr-6"
               >
                 <span className="inline-flex justify-center items-center ml-4">
