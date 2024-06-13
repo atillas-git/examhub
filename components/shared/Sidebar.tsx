@@ -6,12 +6,10 @@ import { RiQuestionAnswerLine } from "react-icons/ri";
 import { BsFileEarmarkBarGraph } from "react-icons/bs";
 import { FaDatabase } from "react-icons/fa6";
 import { TbCoin } from "react-icons/tb";
-import { useDisclosure } from "@nextui-org/react";
 const Sidebar = () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   return (
     <div className="h-full w-full flex flex-col flex-auto flex-shrink-0 antialiased bg-teal-500 text-white">
-      <div className="fixed flex flex-col top-0 left-0 w-64 bg-teal-500 h-full border-r">
+      <div>
         <div className="flex items-center px-4 h-14 border-b-2 font-semibold">
           <div>ExamHub</div>
         </div>
@@ -20,7 +18,7 @@ const Sidebar = () => {
             <li className="px-5">
               <div className="flex flex-row items-center h-8">
                 <div className="text-sm font-semibold tracking-wide text-white">
-                  Common
+                  For you
                 </div>
               </div>
             </li>

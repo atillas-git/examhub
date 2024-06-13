@@ -14,7 +14,7 @@ const AppLayout = ({ children }: IProps) => {
         <div className="sm:hidden">
           <Navbar />
         </div>
-        <div className="flex flex-col">{children}</div>
+        <div className="flex flex-col h-full w-full">{children}</div>
       </div>
     </div>
   );
