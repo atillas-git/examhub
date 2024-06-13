@@ -10,13 +10,14 @@ import {Textarea} from "@nextui-org/input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Difficulty } from "@/types";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 const MyExams = () => {
   const {isOpen,onOpen,onClose} = useDisclosure()
   const [searchInput,setSearchInput] = useState("")
   const [searchDifficulty,setSearchDifficulty] = useState<Difficulty>("easy")
   const [examName,setExamName] = useState("")
-  const [numberOfQuestions,setNumberOfQuestions] = useState("")
+  const [numberOfQuestions,setNumberOfQuestions] = useState(1)
   const [difficulty,setDifficulty] = useState<Difficulty>("easy")
   const [topics,setTopics] = useState("")
   const [questionTypes,setQuestionTypes] = useState("")
@@ -44,11 +45,30 @@ const MyExams = () => {
       if(!examName || !numberOfQuestions || !difficulty || !topics || !questionTypes || !isExamPublic){
         return toast.error("Please fill the required fields!")
       }
+      const res = await axios.post("/api/exam",{
+        examName:examName,
+        numberOfQuestions:numberOfQuestions,
+        difficulty:difficulty,
+        topics:topics,
+        questionTypes:questionTypes,
+        isExamPublic:isExamPublic
+      })
+      clearModal()
     } catch (error) {
-      
+      console.log(error)
     } finally {
       setIsLoading(false)
+      onClose()
     }
+  }
+
+  const clearModal = ()=>{
+    setExamName("")
+    setNumberOfQuestions(1)
+    setDifficulty("easy")
+    setTopics("")
+    setQuestionTypes("")
+    setIsExamPublic(true)
   }
 
   return (
@@ -119,8 +139,8 @@ const MyExams = () => {
                           type="number"
                           isRequired
                           min={1}
-                          value={numberOfQuestions}
-                          onChange={(e)=>setNumberOfQuestions(e.target.value)}
+                          value={String(numberOfQuestions)}
+                          onChange={(e)=>setNumberOfQuestions(parseInt(e.target.value))}
                         />
                       </div>
                       <div className="col-span-12 sm:col-span-6">
@@ -150,12 +170,12 @@ const MyExams = () => {
                           type="text"
                           isRequired
                           value={questionTypes}
-                          placeholder="Example:Create essay, true false and multiple choice questions"
+                          placeholder="Example:2 essay, 3 multiple choice questions"
                           onChange={(e)=>setQuestionTypes(e.target.value)}
                         />
                       </div>
                       <div className="col-span-12 sm:col-span-6">
-                        <Checkbox defaultSelected color="default" onChange={(e)=>setIsExamPublic(!isExamPublic)}>Is this Exam public?</Checkbox>
+                        <Checkbox defaultSelected color="default" onChange={(e)=>setIsExamPublic(!isExamPublic)}>Make the Exam Public?</Checkbox>
                       </div>
                     </ModalBody>
                     <ModalFooter>

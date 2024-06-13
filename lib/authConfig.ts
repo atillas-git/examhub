@@ -2,9 +2,13 @@ import { AuthOptions, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import User from "@/models/User";
+import mongoose from "mongoose";
+import { User as UserType } from "@/types";
 
 export interface NSession extends Session {
-  id: string | undefined;
+  id: mongoose.Types.ObjectId | undefined;
+  username : string;
+  email:string
 }
 
 const authConfig: AuthOptions = {
@@ -26,7 +30,6 @@ const authConfig: AuthOptions = {
         const user = await User.findOne({
           email: credentials.email,
         });
-        console.log(user);
         if (!user) {
           return null;
         }
@@ -34,7 +37,6 @@ const authConfig: AuthOptions = {
         if (!compared) {
           return null;
         }
-        console.log(user);
         return user;
       },
     }),
@@ -50,7 +52,13 @@ const authConfig: AuthOptions = {
     async jwt({ token, user, account, profile }) {
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token,user }) {
+      const us : UserType | null = await User.findById(token.sub);
+      if(us){
+        (session as NSession).id = us._id;
+        (session as NSession).username= us.username;
+        (session as NSession).email = us.email;
+      }
       return session;
     },
   },

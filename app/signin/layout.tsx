@@ -6,10 +6,10 @@ interface IProps {
   children: React.ReactNode;
 }
 const SigninLayout = async ({ children }: IProps) => {
-  const session = await getServerSession(authConfig);
-  if (session) {
-    redirect("/app");
-  }
+  // const session = await getServerSession(authConfig);
+  // if (session) {
+  //   redirect("/app");
+  // }
   return <div>{children}</div>;
 };
 
